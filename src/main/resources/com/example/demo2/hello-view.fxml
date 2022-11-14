@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="479.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo2.HelloController">
+   <children>
+      <DatePicker layoutX="241.0" layoutY="117.0" />
+      <Label layoutX="70.0" layoutY="21.0" prefHeight="43.0" prefWidth="291.0" text="dentist appointment" textAlignment="CENTER">
+         <font>
+            <Font name="Showcard Gothic" size="26.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbbox1" layoutX="253.0" layoutY="77.0" prefWidth="150.0" promptText="Choose your Doctor" />
+      <Button layoutX="348.0" layoutY="166.0" mnemonicParsing="false" onMouseClicked="#clickForApply" prefHeight="29.0" prefWidth="68.0" text="Apply">
+         <font>
+            <Font name="Franklin Gothic Demi Cond" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="14.0" layoutY="436.0" mnemonicParsing="false" onMouseClicked="#clickForConnect" prefHeight="29.0" prefWidth="104.0" text="Firstly connect">
+         <font>
+            <Font name="Franklin Gothic Demi Cond" size="15.0" />
+         </font>
+      </Button>
+      <ProgressIndicator fx:id="progrInd" layoutX="132.0" layoutY="435.0" progress="0.0" visible="false" />
+      <Label fx:id="labelFail" ellipsisString="" layoutX="215.0" layoutY="438.0" text="Connecting falling" textAlignment="CENTER" textFill="RED" visible="false">
+         <font>
+            <Font name="Bodoni MT" size="16.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

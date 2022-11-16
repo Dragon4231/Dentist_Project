@@ -20,14 +20,16 @@ public class MessageHandle {
                 result = new MessageSend("OK",statListDoctors);
             }
         }else if(message.getMessage().equals("newAppointment")){
-            Doctor sended = (Doctor) message.getThePackage();
+            Doctor onThePackage = (Doctor) message.getThePackage();
+            System.out.println(onThePackage);
             for(int i = 0 ; i < statListDoctors.size(); i++){
-                if(statListDoctors.get(i).getNameOfDoctor().equals(sended.getNameOfDoctor())){
-                    statListDoctors.get(i).addDateAppointments(sended.getDateAppointments().get(0));
+                if(statListDoctors.get(i).getNameOfDoctor().equals(onThePackage.getNameOfDoctor())){
+                    statListDoctors.get(i).addDateAppointments(onThePackage.getDateAppointments().get(0));
                 }
             }
             System.out.println(statListDoctors);
             result = new MessageSend("OK/UPDATE",statListDoctors);
+            saveToData();
         }
         return result;
     }
@@ -37,5 +39,10 @@ public class MessageHandle {
         ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("src\\main\\resources\\data\\doctors.data"));
         listDoctors = (ArrayList<Doctor>) objectInputStream.readObject();
         return listDoctors;
+    }
+
+    private void saveToData() throws IOException {
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("src\\main\\resources\\data\\doctors.data"));
+        objectOutputStream.writeObject(statListDoctors);
     }
 }

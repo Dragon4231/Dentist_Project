@@ -12,11 +12,11 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.SocketException;
+import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 
@@ -40,10 +40,16 @@ public class HelloController {
         Doctor newAppointment = new Doctor(cmbbox1.getValue(), cmbbox1.getValue());
         newAppointment.addDateAppointments(GregorianCalendar.from(dateChanger.getValue().atStartOfDay(ZoneId.systemDefault())));
         out.writeObject(new MessageSend("newAppointment", newAppointment));
-
-       /* ObservableList<String> langs = FXCollections.observableArrayList(listView.getItems());
-        langs.add(cmbbox1.getValue() + " | " + dateChanger.getValue());
-        listView.setItems(langs);*/
+        ArrayList<Doctor> nameOfDoctors = new ArrayList<>();
+        while (true) {
+            Object result = in.readObject();
+            if (result != null) {
+                MessageSend m = (MessageSend) result;
+                nameOfDoctors = (ArrayList<Doctor>) m.getThePackage();
+                break;
+            }
+        }
+       refreshListView(nameOfDoctors);
     }
 
     public void clickForConnect(MouseEvent mouseEvent) throws IOException, InterruptedException {
@@ -150,51 +156,23 @@ public class HelloController {
                 nameOfDoctors = (ArrayList<Doctor>) m.getThePackage();
                 ObservableList<String> langs = FXCollections.observableArrayList(nameOfDoctors.stream().map(x -> x.getNameOfDoctor()).collect(Collectors.toList()));
                 cmbbox1.setItems(langs);
+                refreshListView(nameOfDoctors);
                 break;
             }
         }
     }
 
-/*    void listenMessage() {
-        Thread listen = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    Object result = null;
-                    System.out.println("l");
-                    try {
-                        result = in.readObject();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    } catch (ClassNotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
-                    if (result != null) {
-                        System.out.println("nn");
-                        MessageSend m = (MessageSend) result;
-                        if (m.getMessage().equals("OK")) {
-                            ArrayList<Doctor> nameOfDoctors;
-                            nameOfDoctors = (ArrayList<Doctor>) m.getThePackage();
-                            ObservableList<String> langs = FXCollections.observableArrayList(nameOfDoctors.stream().map(x -> x.getNameOfDoctor()).collect(Collectors.toList()));
-                            cmbbox1.setItems(langs);
-                        } else if (m.getMessage().equals("OK/UPDATE")) {
-                            ArrayList<Doctor> nameOfDoctors;
-                            nameOfDoctors = (ArrayList<Doctor>) m.getThePackage();
-                            System.out.println(nameOfDoctors);
-                            ObservableList<String> langs = FXCollections.observableArrayList(listView.getItems());
-                            for (Doctor d : nameOfDoctors) {
-                                if (d.getDateAppointments().isEmpty()) continue;
-                                for (int i = 0; i < d.getDateAppointments().size(); i++) {
-                                    langs.add(d.getNameOfDoctor() + " | " + d.getDateAppointments().get(i));
-                                }
-                            }
-                            listView.setItems(langs);
-                        }
-                    }
-                }
+    private void refreshListView(ArrayList<Doctor> nameOfDoctors){
+        ObservableList<String> langs = FXCollections.observableArrayList();
+        for (Doctor d : nameOfDoctors) {
+            if (d.getDateAppointments().isEmpty()) continue;
+            for (int i = 0; i < d.getDateAppointments().size(); i++) {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+                String text = sdf.format(d.getDateAppointments().get(i).getTime().getTime());
+                langs.add(d.getNameOfDoctor() + " | " + text);
             }
-        });
-        listen.start();
-    }*/
+        }
+        listView.setItems(langs);
+    }
 
 }

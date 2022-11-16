@@ -66,25 +66,14 @@ public class Main extends Thread {
                     if (message != null) {
                         System.out.println("new message");
                         MessageSend answer = new MessageHandle().handleMessage(message);
-                        if (answer.getMessage().equals("OK/UPDATE")) {
-                            sendForAll(answer);
-                        } else {
-                            out.writeObject(answer);
-                        }
+                        out.reset();
+                        out.writeObject(answer);
                     }
                 }
             } catch (IOException e) {
 
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
-            }
-        }
-
-        private void sendForAll(MessageSend messageSend) throws IOException {
-            System.out.println(messageSend.getMessage());
-            System.out.println(messageSend.getThePackage());
-            for(Client c : clientsList){
-                c.out.writeObject(messageSend);
             }
         }
     }

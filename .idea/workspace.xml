@@ -4,11 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6eca25aa-c645-463b-9968-ed3e66c704b7" name="Changes" comment="message, data">
+    <list default="true" id="6eca25aa-c645-463b-9968-ed3e66c704b7" name="Changes" comment="upd">
+      <change afterPath="$PROJECT_DIR$/src/main/java/all_data/RmiInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/all_data/RmiService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/all_data/Doctor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/all_data/Doctor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/HelloController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/MessageHandle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/MessageHandle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/data/doctors.data" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data/doctors.data" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,6 +23,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -41,7 +45,11 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/PP/tz_Intervale/project_dentist&quot;
+    &quot;last_opened_file_path&quot;: &quot;D:/dwnl/opencv/build/java/x64&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -106,7 +114,9 @@
       <workItem from="1668355542972" duration="5344000" />
       <workItem from="1668361405231" duration="9207000" />
       <workItem from="1668411513592" duration="10883000" />
-      <workItem from="1668519290960" duration="23803000" />
+      <workItem from="1668519290960" duration="35571000" />
+      <workItem from="1668779677732" duration="680000" />
+      <workItem from="1668799173136" duration="747000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <created>1668412636014</created>
@@ -122,7 +132,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668543501198</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="upd">
+      <created>1668595997311</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1668595997311</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -142,7 +159,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
     <MESSAGE value="message, data" />
-    <option name="LAST_COMMIT_MESSAGE" value="message, data" />
+    <MESSAGE value="upd" />
+    <option name="LAST_COMMIT_MESSAGE" value="upd" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/project_dentist$client_HelloApplication.ic" NAME="client.HelloApplication Coverage Results" MODIFIED="1668517458541" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

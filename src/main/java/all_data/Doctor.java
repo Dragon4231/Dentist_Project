@@ -39,4 +39,5 @@ public class Doctor implements Serializable {
                 ", dateAppointments=" + dateAppointments +
                 '}';
     }
+
 }

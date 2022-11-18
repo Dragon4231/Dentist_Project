@@ -1,14 +1,15 @@
 package server;
 
-
-import all_data.Doctor;
 import all_data.MessageSend;
+import all_data.RmiInterface;
+import all_data.RmiService;
 
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.rmi.AlreadyBoundException;
+import java.rmi.Naming;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.LinkedList;
 
 public class Main extends Thread {
@@ -16,7 +17,7 @@ public class Main extends Thread {
 
     public static LinkedList<Client> clientsList = new LinkedList<>();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, AlreadyBoundException {
 
 /*
      ArrayList<Doctor> doctors = new ArrayList<>();
@@ -28,8 +29,13 @@ public class Main extends Thread {
         objectOutputStream.writeObject(doctors);
 */
 
+        System.setProperty("java.rmi.server.hostname", "127.0.0.1");
+        RmiInterface rmiInterface = new RmiService();
 
-        ServerSocket server = new ServerSocket(PORT);
+        Registry registry = LocateRegistry.createRegistry(1099);
+        registry.rebind("clien", rmiInterface);
+
+/*        ServerSocket server = new ServerSocket(PORT);
         try {
             while (true) {
                 Socket socket = server.accept();
@@ -42,7 +48,7 @@ public class Main extends Thread {
             }
         } finally {
             server.close();
-        }
+        }*/
     }
 
     static class Client extends Thread {

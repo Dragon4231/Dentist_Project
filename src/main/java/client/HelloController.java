@@ -1,6 +1,5 @@
 package client;
 
-
 import all_data.Doctor;
 import all_data.MessageSend;
 import javafx.application.Platform;
@@ -9,13 +8,20 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import all_data.RmiInterface;
 
 import java.io.*;
 import java.net.Socket;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NameClassPair;
+import javax.naming.NamingException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.stream.Collectors;
 
@@ -33,13 +39,14 @@ public class HelloController {
     public ProgressIndicator progrInd;
     public Label labelFail;
     public DatePicker dateChanger;
+    private RmiInterface dentist;
 
     public void clickForApply(MouseEvent mouseEvent) throws IOException, ClassNotFoundException {
-        if (!isConnected || cmbbox1.getValue() == null || dateChanger.getValue() == null) return;
-
+        //if (!isConnected || cmbbox1.getValue() == null || dateChanger.getValue() == null) return;
+        if (cmbbox1.getValue() == null || dateChanger.getValue() == null) return;
         Doctor newAppointment = new Doctor(cmbbox1.getValue(), cmbbox1.getValue());
         newAppointment.addDateAppointments(GregorianCalendar.from(dateChanger.getValue().atStartOfDay(ZoneId.systemDefault())));
-        out.writeObject(new MessageSend("newAppointment", newAppointment));
+       /* out.writeObject(new MessageSend("newAppointment", newAppointment));
         ArrayList<Doctor> nameOfDoctors = new ArrayList<>();
         while (true) {
             Object result = in.readObject();
@@ -48,15 +55,36 @@ public class HelloController {
                 nameOfDoctors = (ArrayList<Doctor>) m.getThePackage();
                 break;
             }
+        }*/
+        //if (dentist == null) return;
+        dentist.newAppointment(newAppointment);
+        ArrayList<Doctor> temp = dentist.getDoctorsName();
+        refreshListView(temp);
+    }
+
+    public void clickForConnect(MouseEvent mouseEvent) throws IOException, InterruptedException, NotBoundException, ClassNotFoundException, NamingException {
+        try {
+            System.setProperty("java.rmi.server.hostname", "127.0.0.1");
+            dentist = (RmiInterface) Naming.lookup("rmi://localhost/clien");
+            ArrayList<Doctor> doctors = dentist.getDoctorsName();
+            ObservableList<String> langs = FXCollections.observableArrayList(doctors.stream().map(x -> x.getNameOfDoctor()).collect(Collectors.toList()));
+            cmbbox1.setItems(langs);
+            refreshListView(doctors);
+            labelFail.setVisible(false);
+        } catch (Exception e) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    labelFail.setVisible(true);
+                    labelFail.setText("Connect failed");
+                }
+            });
         }
-       refreshListView(nameOfDoctors);
+
+        //setConnecting();
     }
 
-    public void clickForConnect(MouseEvent mouseEvent) throws IOException, InterruptedException {
-        setConnecting();
-    }
-
-    void setConnecting() {
+/*    void setConnecting() {
         progrInd.setVisible(true);
         progrInd.setProgress(0.0);
         Thread t2 = new Thread(new Runnable() {
@@ -111,9 +139,9 @@ public class HelloController {
             }
         });
         t2.start();
-    }
+    }*/
 
-    void checkForConnecting() {
+/*    void checkForConnecting() {
         Thread checkConnecting = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -142,9 +170,9 @@ public class HelloController {
             }
         });
         checkConnecting.start();
-    }
+    }*/
 
-    void getDoctors() throws IOException, ClassNotFoundException {
+/*    void getDoctors() throws IOException, ClassNotFoundException {
         if (!isConnected) return;
 
         out.writeObject(new MessageSend("getDoctorsName", new ArrayList<>()));
@@ -160,9 +188,9 @@ public class HelloController {
                 break;
             }
         }
-    }
+    }*/
 
-    private void refreshListView(ArrayList<Doctor> nameOfDoctors){
+    private void refreshListView(ArrayList<Doctor> nameOfDoctors) {
         ObservableList<String> langs = FXCollections.observableArrayList();
         for (Doctor d : nameOfDoctors) {
             if (d.getDateAppointments().isEmpty()) continue;
